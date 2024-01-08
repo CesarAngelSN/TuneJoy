@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "967301776638",
+    "project_id": "proyectospotify-1996",
+    "storage_bucket": "proyectospotify-1996.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967301776638:android:0402a55f767de91940d1af",
+        "android_client_info": {
+          "package_name": "com.example.tunejoy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967301776638-lu7svaoebv7mpvssv17o9j08os8pcb3t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tunejoy",
+            "certificate_hash": "6a7054fae901c1e306e55feea67ccd5015d20e21"
+          }
+        },
+        {
+          "client_id": "967301776638-iflsrfrh2ottqp2ru50e0geat5gvi5m3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHDtZMx9aSuzx1U9fPbZc-H5SIVaimUpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967301776638-iflsrfrh2ottqp2ru50e0geat5gvi5m3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
