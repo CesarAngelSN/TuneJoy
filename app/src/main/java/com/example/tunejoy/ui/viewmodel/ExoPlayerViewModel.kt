@@ -89,6 +89,7 @@ class ExoPlayerViewModel: ViewModel() {
         val random = Random
         _exoPlayer.value!!.stop()
         _exoPlayer.value!!.clearMediaItems()
+        _progress.value = 0
         //_exoPlayer.value!!.prepare()
 
         if (type == "normal") {
@@ -130,6 +131,7 @@ class ExoPlayerViewModel: ViewModel() {
     val progress = _progress.asStateFlow()
     fun setNewProgress(newProgress: Long) {
         _progress.value = newProgress
+        _exoPlayer.value?.seekTo(_progress.value)
     }
 
     fun clearMediaItems() {
@@ -171,10 +173,5 @@ class ExoPlayerViewModel: ViewModel() {
         _exoPlayer.value?.seekToNextMediaItem()
     }
 
-    fun changeCurrentSong(song: Song) {
-        println("Changing song to ${song.toString()}")
-        _currentSong.value = song
-
-    }
 
 }

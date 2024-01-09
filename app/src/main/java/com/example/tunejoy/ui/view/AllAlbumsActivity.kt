@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,6 +43,7 @@ fun AllAlbumsActivity(navController: NavController, innerPadding: PaddingValues)
         Modifier
             .fillMaxWidth()
             .padding(innerPadding)){
+        Spacer(modifier = Modifier.height(20.dp))
         Text(text = "Albums", Modifier.padding(start = 20.dp), fontWeight = FontWeight.Bold, fontSize = 35.sp)
         LazyColumn(
             modifier = Modifier.padding(16.dp),

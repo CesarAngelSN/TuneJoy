@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +36,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
@@ -108,10 +110,9 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
     )
 
     //REVISAAARRRRRR
-    LaunchedEffect(Unit) {
+    runBlocking {
         if (songId != null) {
-            song = firestoreService.getSongById(songId, exoPlayerViewModel)
-            //exoPlayerViewModel.changeCurrentSong(song!!)
+            song = firestoreService.getSongById(songId)
         }
     }
 
@@ -120,6 +121,7 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
             .fillMaxSize()
             .padding(innerPadding), Arrangement.SpaceAround, Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
         Box(
             Modifier
                 .width(320.dp)
@@ -174,8 +176,7 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
                         contentDescription = "",
                         modifier = Modifier
                             .size(160.dp)
-                            .clip(CircleShape)
-                            .border(1.dp, Color.Red),
+                            .clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
                     Box(
@@ -183,7 +184,7 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
                             .size(25.dp)
                             .clip(CircleShape)
                             .background(
-                                Color.White
+                                MaterialTheme.colorScheme.background
                             )
                     ) {
                     }
@@ -198,9 +199,8 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
             Arrangement.SpaceBetween, Alignment.CenterVertically
         ) {
             Column {
-               // println("Current song" + currentSong.value.toString())
-                if (currentSong.value != null) {
-                    Text(text = currentSong.value!!.getName(), fontSize = 20.sp)
+                if (song != null) {
+                    Text(text = song!!.getName(), fontSize = 20.sp)
                     Text(text = song!!.getArtist())
                 }
             }
@@ -252,13 +252,13 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
                         value = progress.toFloat()/1000,
                         onValueChange = {
                             //songViewModel.setNewSliderValue(it)
-                            //exoPlayerViewModel.setNewProgress(it.toLong())
+                            exoPlayerViewModel.setNewProgress(it.toLong())
                         },
                         valueRange = 0f..(duration/ 1000).toFloat(),
                         steps = (duration / 1000).toInt(),
                         colors = SliderDefaults.colors(
-                            thumbColor = Color.Red,
-                            activeTrackColor = Color.Green,
+                            thumbColor = colorResource(id = R.color.dark_orange),
+                            activeTrackColor = colorResource(id = R.color.light_orange),
                             inactiveTrackColor = Color.Gray
                         )
                     )
@@ -316,9 +316,11 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
                 Alignment.CenterVertically
             ) {
                 IconButton(onClick = {
-                    //exoPlayerViewModel.changeSong(applicationContext, "normal", "prev")
                     exoPlayerViewModel.changeSong(applicationContext, "normal", "prev")
-
+                    println("Current: " + currentSong.value.toString())
+                    if (currentSong.value != null) {
+                        song = currentSong.value
+                    }
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_skip_previous_24),
@@ -347,7 +349,11 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
                 }
                 IconButton(onClick = {
                     exoPlayerViewModel.changeSong(applicationContext, "normal", "next")
-
+                    println("Current: " + currentSong.value.toString())
+                    if (currentSong.value != null) {
+                        println("Current dentro del if: " + currentSong.value.toString())
+                        song = currentSong.value
+                    }
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_skip_next_24),

@@ -3,9 +3,11 @@ package com.example.tunejoy.ui.view
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -60,12 +62,14 @@ fun HomeActivity(applicationContext: Context, innerPadding: PaddingValues, navCo
         albumList.addAll(firestoreService.getAlbums())
         playlistList.addAll(firestoreService.getPlaylists())
     }
+    var theme = isSystemInDarkTheme()
     Column(
         Modifier
             .fillMaxWidth()
             .padding(innerPadding)
             .verticalScroll(rememberScrollState())) {
         Column {
+            Spacer(modifier = Modifier.height(20.dp))
             Text(text = "Artists", Modifier.padding(start = 20.dp), fontWeight = FontWeight.Bold, fontSize = 20.sp)
             LazyRow(contentPadding = PaddingValues(8.dp)) {
                 items(artistList.size) {
@@ -119,7 +123,13 @@ fun CardElement(type: String, text: String, onNavigate: () -> Unit) {
             if (type == "playlist") {
                 Icon(painter = painterResource(id = R.drawable.baseline_playlist_play_24),
                     contentDescription = null,
-                    modifier = Modifier.size(100.dp))
+                    modifier = Modifier.size(100.dp),
+                    tint = if (!isSystemInDarkTheme()) {
+                        Color.Black
+                    }
+                    else {
+                        Color.White
+                    })
             }
             else {
                 Image(

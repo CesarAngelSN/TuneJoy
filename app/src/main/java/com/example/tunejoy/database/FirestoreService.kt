@@ -3,7 +3,6 @@ package com.example.tunejoy.database
 import com.example.tunejoy.model.Artist
 import com.example.tunejoy.model.Playlist
 import com.example.tunejoy.model.Song
-import com.example.tunejoy.ui.viewmodel.ExoPlayerViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +30,7 @@ class FirestoreService {
         }
     }
 
-    suspend fun getSongById(id: String, VM: ExoPlayerViewModel): Song {
+    suspend fun getSongById(id: String): Song {
         return withContext(Dispatchers.IO) {
             var song = Song("", "", "", "", "", "", false)
             val document = db.collection("songs").document(id).get().await()
@@ -42,13 +41,10 @@ class FirestoreService {
                 val lyrics = document.get("lyrics") as String
                 val album = document.get("album") as String
                 song = Song(id, name, artist, lyrics, link, album, false)
-                VM.changeCurrentSong(song)
-
             }
             else {
                 println("canción no encontrada")
             }
-
             song
         }
     }

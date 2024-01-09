@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -70,6 +71,7 @@ fun SearchActivity(navController: NavController, innerPadding: PaddingValues, ap
         Modifier
             .fillMaxSize()
             .padding(innerPadding), Arrangement.Top, Alignment.CenterHorizontally) {
+        Spacer(modifier = Modifier.height(20.dp))
         SearchBar(
             query = query,
             onQueryChange = { searchViewModel.queryChange(it) },

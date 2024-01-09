@@ -40,22 +40,29 @@ private val LightColorScheme = lightColorScheme(
 )
 
 private val OwnDarkColorScheme = darkColorScheme(
-    primary = BackgroundGrey,
+    primary = DarkerGray,
     //primaryVariant = DarkOrange,
     secondary = LightOrange,
     background = BackgroundGrey,
-    surface = Color.White,
+    surface = DarkerGray,
+    error = Color.Red,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White
+)
+
+private val OwnLightColorScheme = lightColorScheme(
+    primary = DarkOrange,
+    //primaryVariant = DarkOrange,
+    secondary = LightOrange,
+    background = Color.White,
+    surface = DarkOrange,
     error = Color.Red,
     onPrimary = Color.Black,
     onSecondary = Color.Black,
     onBackground = Color.Black,
     onSurface = Color.Black
-)
-
-private val OwnLightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
 )
 
 @Composable
