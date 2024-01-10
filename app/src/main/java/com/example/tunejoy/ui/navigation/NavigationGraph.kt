@@ -171,14 +171,14 @@ fun NavigationGraph(
                                     }
                                 }
                             }) {
-                                Text(text = "Confirm")
+                                Text(text = "Confirm", color = MaterialTheme.colorScheme.onSurface)
                             }
                         },
                         dismissButton = {
                             TextButton(onClick = {
                                 activeDialog = false
                             }) {
-                                Text(text = "Cancel")
+                                Text(text = "Cancel", color = MaterialTheme.colorScheme.onSurface)
                             }
                         })
                 }

@@ -46,6 +46,7 @@ import com.example.tunejoy.ui.viewmodel.SearchViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
@@ -63,7 +64,7 @@ fun SearchActivity(navController: NavController, innerPadding: PaddingValues, ap
     )
     val firestoreService = FirestoreService()
     val songList = mutableStateListOf<Song>()
-    scope.launch (Dispatchers.Main){
+    runBlocking{
         //en principio no hace falta ni el async ni el await, pero a una mala se lo clavo
         songList.addAll(firestoreService.getItems())
     }
@@ -139,9 +140,8 @@ fun SearchActivity(navController: NavController, innerPadding: PaddingValues, ap
             }
             items(filteredSongs.size) { index ->
                 Card (onClick = {
-                        navController.navigate("songactivity/${filteredSongs[index].getId()}")
-                        exoPlayerViewModel.playMusic(applicationContext, filteredSongs, filteredSongs[index])
-
+                        navController.navigate("songactivity/${songList[songList.indexOf(filteredSongs[index])].getId()}")
+                        exoPlayerViewModel.playMusic(applicationContext, songList, songList[songList.indexOf(filteredSongs[index])])
                     },
                     modifier = Modifier
                         .fillMaxWidth()

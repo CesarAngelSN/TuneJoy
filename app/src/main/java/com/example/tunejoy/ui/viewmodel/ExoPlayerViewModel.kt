@@ -2,6 +2,7 @@ package com.example.tunejoy.ui.viewmodel
 
 import android.content.Context
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -123,6 +124,9 @@ class ExoPlayerViewModel: ViewModel() {
 
     private val _currentSong = MutableStateFlow(mutableStateOf<Song?>(null))
     val currentSong = _currentSong.asStateFlow()
+    fun getCurrentSong(): MutableState<Song?> {
+        return _currentSong.value
+    }
 
     private val _duration  = MutableStateFlow<Long>(0)
     val duration = _duration.asStateFlow()
