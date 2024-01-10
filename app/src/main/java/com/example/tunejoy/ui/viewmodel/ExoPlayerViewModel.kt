@@ -34,6 +34,15 @@ class ExoPlayerViewModel: ViewModel() {
         _exoPlayer.value?.playWhenReady = true
     }
 
+    fun updateProgress() {
+        viewModelScope.launch {
+            while(isActive){
+                _progress.value = _exoPlayer.value!!.currentPosition.toInt().toLong()
+                delay(1000)
+            }
+        }
+    }
+
     private val _songList = MutableStateFlow(mutableStateListOf<Song>())
     val songList = _songList.asStateFlow()
 
@@ -55,16 +64,9 @@ class ExoPlayerViewModel: ViewModel() {
                         Player.STATE_READY -> {
                             // El Player está preparado para empezar la reproducción.
                             // Si playWhenReady es true, empezará a sonar la música.
-
+                            updateProgress()
                             _duration.value = _exoPlayer.value!!.duration
                             println("Duracion: " + _duration.value)
-
-                            viewModelScope.launch {
-                                while(isActive){
-                                    _progress.value = _exoPlayer.value!!.currentPosition.toInt().toLong()
-                                    delay(1000)
-                                }
-                            }
                         }
                         Player.STATE_BUFFERING -> {
                             // El Player está cargando el archivo, preparando la reproducción.
@@ -90,7 +92,7 @@ class ExoPlayerViewModel: ViewModel() {
         val random = Random
         _exoPlayer.value!!.stop()
         _exoPlayer.value!!.clearMediaItems()
-        _progress.value = 0
+        //_progress.value = 0
         //_exoPlayer.value!!.prepare()
 
         if (type == "normal") {
@@ -135,11 +137,9 @@ class ExoPlayerViewModel: ViewModel() {
     val progress = _progress.asStateFlow()
     fun setNewProgress(newProgress: Long) {
         _progress.value = newProgress
-        _exoPlayer.value?.seekTo(_progress.value)
-    }
+        //_progress.value = _exoPlayer.value!!.currentPosition.toInt().toLong()
+        _exoPlayer.value?.seekTo(_progress.value * 1000)
 
-    fun clearMediaItems() {
-        _exoPlayer.value?.clearMediaItems()
     }
 
     fun setLoopMode(repeat: Boolean) {
@@ -158,24 +158,4 @@ class ExoPlayerViewModel: ViewModel() {
             _exoPlayer.value!!.pause()
         }
     }
-
-    fun getDuration(): Long {
-        return _exoPlayer.value!!.duration
-    }
-
-    fun setCurrentPosition(position: Long) {
-        _exoPlayer.value!!.seekTo(position)
-    }
-
-    fun getPreviousItem() {
-        _exoPlayer.value?.stop()
-        _exoPlayer.value?.seekToPreviousMediaItem()
-    }
-
-    fun getNextItem() {
-        _exoPlayer.value?.stop()
-        _exoPlayer.value?.seekToNextMediaItem()
-    }
-
-
 }

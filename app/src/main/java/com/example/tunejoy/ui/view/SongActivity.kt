@@ -251,7 +251,6 @@ fun SongActivity(applicationContext: Context, innerPadding: PaddingValues, songI
                     Slider(
                         value = progress.toFloat()/1000,
                         onValueChange = {
-                            //songViewModel.setNewSliderValue(it)
                             exoPlayerViewModel.setNewProgress(it.toLong())
                         },
                         valueRange = 0f..(duration/ 1000).toFloat(),
